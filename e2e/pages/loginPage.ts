@@ -56,4 +56,17 @@ export default class LoginPage {
     // Notice the lack of a '/' between those variables in the above comment...
     await this.page.goto(this.url);
   }
+
+  // To avoid repeating code in tests, create functions...
+  // For ease of use, the tester can pass "login()" to log in
+  // with valid credentials.
+  async login(username: string = "student", password: string = "Password123") {
+    // TODO: Don't store credentials in code that will be
+    // committed into the repo. This should be extracted into
+    // a different file and grabbed here instead.
+
+    await this.usernameField.fill(username);
+    await this.passwordField.fill(password);
+    await this.submitButton.click();
+  }
 }

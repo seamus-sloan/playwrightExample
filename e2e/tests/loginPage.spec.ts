@@ -15,9 +15,13 @@ test.describe("Login Scenarios", () => {
     await loginPage.goto();
 
     // Perform the steps of the test
-    await loginPage.usernameField.fill("student");
-    await loginPage.passwordField.fill("Password123");
-    await loginPage.submitButton.click();
+    // await loginPage.usernameField.fill("username");
+    // await loginPage.passwordField.fill("password");
+    // await loginPage.submitButton.click();
+
+    // Instead of typing out the steps to log in, this should
+    // be done as follows instead:
+    await loginPage.login();
 
     // Assert what you are expecting to happen
     await expect(loginPage.loginSuccessHeader).toBeInViewport();
@@ -46,9 +50,7 @@ test.describe("Login Scenarios", () => {
     // Perform multiple of the same test via a for loop
     for (const username of invalidUsernames) {
       // First pass will use `studnet`, next will use `oops`, etc...
-      await loginPage.usernameField.fill(username);
-      await loginPage.passwordField.fill("test");
-      await loginPage.submitButton.click();
+      await loginPage.login(username, undefined);
 
       // Verify that the login error appears
       await expect(loginPage.loginError).toHaveText(errorMessage);
@@ -60,7 +62,6 @@ test.describe("Login Scenarios", () => {
   });
 
   test("invalid password", async ({ page }) => {
-    // Define the page object as before...
     const loginPage = new LoginPage(page);
     await loginPage.goto();
 
@@ -68,12 +69,8 @@ test.describe("Login Scenarios", () => {
     const invalidPasswords = ["pass", "specialº∂ƒ", "123123123"];
 
     for (const password of invalidPasswords) {
-      await loginPage.usernameField.fill("student");
-      await loginPage.passwordField.fill(password);
-      await loginPage.submitButton.click();
-
+      await loginPage.login(undefined, password);
       await expect(loginPage.loginError).toHaveText(errorMessage);
-
       await loginPage.page.reload();
     }
   });
