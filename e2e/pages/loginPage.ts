@@ -64,8 +64,7 @@ export default class LoginPage {
     // TODO: Don't store credentials in code that will be
     // committed into the repo. This should be extracted into
     // a different file and grabbed here instead.
-    //Sick dude!
-    // another line
+    
     await this.usernameField.fill(username);
     await this.passwordField.fill(password);
     await this.submitButton.click();
